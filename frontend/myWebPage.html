@@ -13,7 +13,7 @@
 <body>
 
 <div class="container">
-  <h1 class=""hero">How much to charge?</h1>
+  <h1 class="hero">How much to charge?</h1>
   <p class="lead">If you were a freelance web designer, how much should you charge for a website? Fill out the form and find out!</p>
 </div>
 
@@ -24,7 +24,10 @@
     <label for="days">How many days do you think it will take you to make the website?</label>
     <input type="text" id="days" name="days" class="form-control"/><br><br>
     <input type="button" id="submit" value="Calculate your price!" class="btn btn-lg"><br><br>
-    <label id="finalPrice"> ??? </label>
+    <label id="finalPrice"> ??? </label> <br> <br>
+    <label for="quoteName">What do you want to name your quote</label>
+    <input type="text" id="quoteName" name="name" class="form-control"/><br><br>
+    <input type="button" id="storeQuote" value="Store Quote" class="btn btn-lg"><br><br>
   </form>
 </div>
 
@@ -54,6 +57,7 @@
   */
   // handling the submit button through the API
   $('#submit').click(handleClick);
+  $('#storeQuote').click(storeQuote);
 
   function handleClick() {
     var salary = $('#salary').val();
@@ -69,6 +73,22 @@
       }
     });
     return false;
+  }
+
+  function storeQuote() {
+    var salary = $('#salary').val();
+    var days = $('#days').val();
+    var quoteName = $('#quoteName').val();
+    var url = "/api/storeQuote?"+"quoteName="+quoteName+"&salary="+salary+"&days="+days;
+    console.log(url)
+
+    $.ajax(
+      {url: url,
+      success: function(finalPrice){
+        $("#finalPrice").html(finalPrice);
+      }
+    });
+
   }
 
 
