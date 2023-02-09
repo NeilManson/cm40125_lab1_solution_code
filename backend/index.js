@@ -4,7 +4,9 @@ var path = require('path');
 var express = require('express');
 var app = express();
 const {MongoClient} = require("mongodb")
-const uri = "mongodb://127.0.0.1:27017"
+const uri = "mongodb://testUser:password@127.0.0.1:27017/mydb"
+const DBURI = process.env.DBURI;
+const PORT = process.env.PORT || 8000;
 
 var options = {
     index: "myWebPage.html"
@@ -40,7 +42,7 @@ app.get('/api/storeQuote', function(req, res){
     var n = req.query.quoteName;
     // Database stuff
     // Create a new MongoClient
-    const client = new MongoClient(uri)
+    const client = new MongoClient(DBURI)
     async function run(){
         try{
             // Write database Insert/Update/Query code here
